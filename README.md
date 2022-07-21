@@ -7,7 +7,6 @@
 - Rename .envtemplate to .env and add values to variables accordingly
 - Create postgres database and schema. provide credential details in .env
 - Run migrations ` npx sequlize-cli db:migrate`
-- Run seed data ` npx sequlize-cli db:seed:all`
 - Run `npm install`
 - Run `npm run dev` to start with `nodemon`. This will launch application at http://localhost:3000. You can change port in env variable PORT
 - Create folder `/public/uploads`
