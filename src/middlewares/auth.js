@@ -1,6 +1,6 @@
 import jwt from 'express-jwt';
 
-const getTokenFromHeaders = (req) => {
+export const getTokenFromHeaders = (req) => {
   const {
     headers: { authorization },
   } = req;
