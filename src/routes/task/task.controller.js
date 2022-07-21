@@ -1,8 +1,9 @@
 import Joi from 'joi';
 import express from 'express';
+import { get } from 'lodash';
 import models from '../../models';
 import { STATUS_CODES } from '../../utils/constants';
-import { getTaskById } from './query';
+import { deleteTaskQuery, getTaskById } from './query';
 
 import { BadRequestError, getErrorMessages, SuccessResponse } from '../../utils/helper';
 import { createTaskSchema } from './validationSchemas';
@@ -15,6 +16,7 @@ class TaskController {
     this.router = express.Router();
     this.router.get('/', this.list);
     this.router.post('/create', this.createTask);
+    this.router.delete('/', this.deleteTask);
     return this.router;
   }
 
@@ -40,6 +42,16 @@ class TaskController {
     } catch (e) {
       next(e);
     }
+  }
+
+  static async deleteTask(req, res) {
+    const taskIds = get(req, 'body.id', []);
+
+    if (taskIds.length < 1) {
+      BadRequestError(`Task id is required`, STATUS_CODES.INVALID_INPUT);
+    }
+    const taskCount = await Task.destroy(deleteTaskQuery({ id: taskIds }));
+    return SuccessResponse(res, { count: taskCount });
   }
 }
 

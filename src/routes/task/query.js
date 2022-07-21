@@ -3,3 +3,9 @@ export const getTaskById = ({ name }) => ({
     name,
   },
 });
+
+export const deleteTaskQuery = ({ id }) => ({
+  where: {
+    id,
+  },
+});
