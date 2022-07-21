@@ -1,9 +1,9 @@
 import { Model } from 'sequelize';
 
 export default (sequelize, { STRING, INTEGER }) => {
-  class User extends Model {}
+  class Task extends Model {}
 
-  User.init(
+  Task.init(
     {
       id: {
         allowNull: false,
@@ -11,33 +11,17 @@ export default (sequelize, { STRING, INTEGER }) => {
         type: INTEGER,
         autoIncrement: true,
       },
-      email: {
+      name: {
         type: STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail: true,
-        },
-      },
-      password: {
-        type: STRING,
-        allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'User',
-      paranoid: true,
+      modelName: 'Task',
       timestamps: true,
-    },
-    {
-      indexes: [
-        {
-          unique: true,
-          fields: ['email'],
-        },
-      ],
     }
   );
-  return User;
+  return Task;
 };

@@ -151,6 +151,81 @@
           }
         }
       }
+    },
+    "/tasks/create": {
+      "post": {
+        "tags": ["Task"],
+        "summary": "An endpoint to create task",
+        "operationId": "createUsers",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Task"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful creation of user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. An Expert authenticated session needs to be created"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Retrieve list of all tasks",
+        "tags": ["Task"],
+        "operationId": "getTaskList",
+        "responses": {
+          "200": {
+            "description": "Array of Task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Task"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -174,6 +249,17 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -210,6 +296,22 @@
                   "type": "string"
                 },
                 "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      },
+      "Task": {
+        "description": "Information about the Task",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
                   "type": "string"
                 }
               }

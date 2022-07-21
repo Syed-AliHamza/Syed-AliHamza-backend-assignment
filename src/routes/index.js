@@ -1,5 +1,6 @@
 import express from 'express';
 import auth from '../middlewares/auth';
+import TaskController from './task/task.controller';
 import UserController from './user/user.controller';
 
 const router = express.Router();
@@ -15,5 +16,6 @@ const aclExcludedRoutes = [
 router.use(auth.required.unless({ path: aclExcludedRoutes }));
 
 router.use('/users', UserController.getRouter());
+router.use('/tasks', TaskController.getRouter());
 
 export default router;
