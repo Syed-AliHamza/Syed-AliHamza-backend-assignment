@@ -1,4 +1,4 @@
-## FunTown Backend
+## Assignment Backend
 
 ## Setup
 
