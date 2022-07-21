@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-export default (sequelize, { STRING, INTEGER, ENUM, BOOLEAN }) => {
+export default (sequelize, { STRING, INTEGER }) => {
   class User extends Model {
     // static associate() {
     // }
@@ -14,10 +14,6 @@ export default (sequelize, { STRING, INTEGER, ENUM, BOOLEAN }) => {
         type: INTEGER,
         autoIncrement: true,
       },
-      username: {
-        type: STRING,
-        allowNull: false,
-      },
       email: {
         type: STRING,
         allowNull: false,
@@ -29,17 +25,6 @@ export default (sequelize, { STRING, INTEGER, ENUM, BOOLEAN }) => {
       password: {
         type: STRING,
         allowNull: false,
-      },
-      role: {
-        type: ENUM('super', 'admin', 'user'),
-        defaultValue: 'user',
-      },
-      isActive: {
-        type: BOOLEAN,
-      },
-      avatar: {
-        type: STRING,
-        allowNull: true,
       },
     },
     {
