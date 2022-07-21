@@ -22,7 +22,7 @@ class UserController {
 
   static getRouter() {
     this.router = express.Router();
-    this.router.post('/resgister', this.register);
+    this.router.post('/register', this.register);
     this.router.post('/login', this.login);
     this.router.get('/:id', this.getUserById);
     return this.router;

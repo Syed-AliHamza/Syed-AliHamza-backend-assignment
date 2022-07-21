@@ -28,6 +28,10 @@ module.exports = {
         allowNull: false,
         type: DATE,
       },
+      deletedAt: {
+        allowNull: true,
+        type: DATE,
+      },
     });
   },
   down: async (queryInterface) => {
