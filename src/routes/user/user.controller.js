@@ -22,7 +22,7 @@ class UserController {
 
   static getRouter() {
     this.router = express.Router();
-    this.router.post('/resgister', this.login);
+    this.router.post('/resgister', this.register);
     this.router.post('/login', this.login);
     this.router.get('/:id', this.getUserById);
     return this.router;
@@ -39,7 +39,6 @@ class UserController {
       }
       const query = getUserByIdQuery({ id });
       const user = await User.findOne(query);
-      UserController.generatePreSignedUrl([user]);
       return SuccessResponse(res, user);
     } catch (e) {
       next(e);
@@ -63,20 +62,16 @@ class UserController {
         const userObj = {
           id: passportUser.id,
           email: passportUser.email,
-          role: passportUser.role,
-          username: passportUser.username,
-          avatar: passportUser.avatar,
           token: generateJWT(passportUser),
         };
-        UserController.generatePreSignedUrl([userObj]);
         return SuccessResponse(res, userObj);
       }
       return next(new BadRequest(getPassportErrorMessage(info), STATUS_CODES.INVALID_INPUT));
     })(req, res, next);
   }
 
-  static async createUser(req, res, next) {
-    const { body: userPayload, file = {} } = req;
+  static async register(req, res, next) {
+    const { body: userPayload } = req;
     try {
       const result = Joi.validate(userPayload, userSignUpSchema);
       if (result.error) {
@@ -91,8 +86,6 @@ class UserController {
       const userExists = await User.findOne(query);
       if (!userExists) {
         userPayload.password = generateHash(userPayload.password);
-        userPayload.role = userPayload.role || 'user';
-        userPayload.avatar = file.key;
         const user = await User.create(userPayload);
         const userResponse = user.toJSON();
         delete userResponse.password;

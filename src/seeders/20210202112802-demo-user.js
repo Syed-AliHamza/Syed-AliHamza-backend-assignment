@@ -9,11 +9,8 @@ export default {
       },
       [
         {
-          username: 'iamauser',
           email: 'admin@email.com',
           password: generateHash('admin123'),
-          role: 'super',
-          isActive: true,
           createdAt: '2020-01-01T00:00:00.000Z',
           updatedAt: '2020-01-01T00:00:00.000Z',
         },
